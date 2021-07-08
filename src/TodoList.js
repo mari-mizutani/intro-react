@@ -1,30 +1,13 @@
 import React, { useState } from 'react';
 
-export default function TodoList() {
-    const [todos, setTodos] = useState([ 
-        {
-            id:1, 
-            task:'Todo 1',
-            value: true
-        },
-        {
-            id:2, 
-            task:'Todo 2',
-            value: false
-        },
-        {
-            id:3, 
-            task:'Todo 3',
-            value: false
-        }
-    ]);
+export default function TodoList({todos,setTodos}) {
 
     function setCheck(todo) {
         let tempArray = todos;
         let foundElement = tempArray.find(element => element.id === todo.id);
         foundElement.value = !foundElement.value;
         setTodos(tempArray);
-        console.log(tempArray,foundElement,todo)
+        // console.log(tempArray,foundElement,todo)
     };
     
     return (
