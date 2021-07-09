@@ -1,28 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import TodoList from './TodoList'
 import Form from './Form'
 
-let count = 0;
+const LSKEY = "MyTodoApp";
 
 function App() {
-  const [todos, setTodos] = useState([ 
-    {
-        id:count++, 
-        task:'Todo 1',
-        value: true
-    },
-    {
-        id:count++, 
-        task:'Todo 2',
-        value: false
-    },
-    {
-        id:count++, 
-        task:'Todo 3',
-        value: false
-    }
-]);
+  // Initialize the state
+  const initialTodos = [];
+  const [todos, setTodos] = useState(initialTodos);
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem(LSKEY + ".todos"));
+    if (storedTodos) setTodos(storedTodos);
+  }, []); 
+
+  // Save todos to localStorage
+  useEffect(() => {
+    window.localStorage.setItem(LSKEY + ".todos", JSON.stringify(todos));
+  },[todos]);
+
 
   return (
       <>
@@ -30,7 +27,7 @@ function App() {
         <header>
           <h1>My Todo App</h1>
         </header>
-        < Form todos={todos} setTodos={setTodos} count={count} />
+        < Form todos={todos} setTodos={setTodos} />
         < TodoList todos={todos} setTodos={setTodos}/>
       </div>
       </>
